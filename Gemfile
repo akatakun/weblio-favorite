@@ -7,3 +7,4 @@ gem "pry"
 
 gem "activerecord"
 gem "sqlite3"
+gem "nokogiri"
