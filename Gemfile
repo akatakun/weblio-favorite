@@ -3,5 +3,7 @@ source "https://rubygems.org"
 
 # gem "rails"
 
+gem "pry"
+
 gem "activerecord"
 gem "sqlite3"
