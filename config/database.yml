@@ -1,0 +1,4 @@
+development:
+  adapter:  sqlite3
+  host:     localhost
+  database: db/weblio-favorite.sqlite3
