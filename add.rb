@@ -1,15 +1,13 @@
 #!/usr/bin/env ruby
 
-require 'active_record'
+require './initializer/active_record'
 require 'open-uri'
 require 'nokogiri'
-require 'yaml'
 
 raise 'String for search as argument is required' if ARGV.size < 1
 
 content = URI.encode(ARGV[0])
 dic_uri = "http://www.weblio.jp/content/#{content}"
-the_uri = "http://thesaurus.weblio.jp/content/#{content}"
 
 charset = nil
 
@@ -23,7 +21,6 @@ kaki = nil
 yomi = nil
 body = nil
 
-#doc.xpath('//div[@class="NetDicHead"]').tap do |heads|
 doc.xpath('//div[@class="kiji"]').tap do |bodies|
   break if bodies.size < 1
   body = bodies.first
@@ -34,19 +31,11 @@ doc.xpath('//div[@class="kiji"]').tap do |bodies|
   body = body.text
 end
 
-config = YAML.load_file('./config/database.yml')
-ActiveRecord::Base.establish_connection(
-  config['development'],
-)
-
-require './model/dictionary'
-
 dictionary = Dictionary.find_or_create_by(
   kaki: kaki,
 )
-dictionary.yomi = yomi
+dictionary.yomi = yomi || kaki
 dictionary.body = body
 dictionary.save
 
-puts "#{dictionary.kaki}(#{dictionary.yomi})"
-puts dictionary.body
+dictionary.display
