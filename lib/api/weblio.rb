@@ -26,7 +26,7 @@ module API
           break if bodies.size < 1
           body = bodies.first
 
-          kaki = body.css('h2').first.attr('title')
+          kaki = body.css('h2').first.attr('title').gsub(/\//, '')
           yomi = body.css('b').first
           yomi = yomi.text.gsub(/\s/, '') if yomi
           body = body.text
