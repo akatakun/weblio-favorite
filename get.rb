@@ -3,7 +3,7 @@ require './lib/api/weblio'
 
 case ARGV.size
 when 0
-  Dictionary = Dictionary.offset(rand(Dictionary.count)).first
+  dictionary = Dictionary.offset(rand(Dictionary.count)).first
 when 1
   kaki, yomi, body = API::Weblio.search(ARGV[0])
   dictionary = Dictionary.find_or_initialize_by(
