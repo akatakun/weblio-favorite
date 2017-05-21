@@ -5,7 +5,7 @@ require 'optparse'
 
 args = ARGV.getopts('n:', 'slim', 'loop', 'latest')
 
-LATEST_OFFSET_NUMBER = 5
+LATEST_OFFSET_NUMBER = 25
 
 case ARGV.size
 when 0
