@@ -3,20 +3,23 @@ require './lib/api/weblio'
 
 require 'optparse'
 
-args = ARGV.getopts('n:', 'slim', 'latest')
+args = ARGV.getopts('n:', 'slim', 'loop', 'latest')
 
 LATEST_OFFSET_NUMBER = 5
 
 case ARGV.size
 when 0
-  limit = args['n'] || 1
-  if args['latest']
-    Dictionary.offset(Dictionary.count - LATEST_OFFSET_NUMBER + rand(LATEST_OFFSET_NUMBER)).limit(limit)
-  else
-    Dictionary.offset(rand(Dictionary.count)).limit(limit)
-  end.each do |dictionary|
-    dictionary.display(args['slim'])
-  end
+  begin
+    sleep 1 if args['loop']
+    limit = args['n'] || 1
+    if args['latest']
+      Dictionary.offset(Dictionary.count - LATEST_OFFSET_NUMBER + rand(LATEST_OFFSET_NUMBER)).limit(limit)
+    else
+      Dictionary.offset(rand(Dictionary.count)).limit(limit)
+    end.each do |dictionary|
+      dictionary.display(args['slim'])
+    end
+  end while args['loop']
 when 1
   kaki, yomi, body = API::Weblio.search(ARGV[0])
   dictionary = Dictionary.find_or_initialize_by(
