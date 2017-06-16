@@ -1,3 +1,10 @@
+function webget() {
+  prev_dir=`pwd`
+  cd ~/development/ruby/weblio-favorite/
+  bundle exec ruby get.rb $1 --slim 2> /dev/null
+  cd $prev_dir
+}
+
 function webadd() {
   prev_dir=`pwd`
   cd ~/development/ruby/weblio-favorite/
@@ -5,9 +12,3 @@ function webadd() {
   cd $prev_dir
 }
 
-function webget() {
-  prev_dir=`pwd`
-  cd ~/development/ruby/weblio-favorite/
-  bundle exec ruby get.rb $1 2> /dev/null
-  cd $prev_dir
-}
