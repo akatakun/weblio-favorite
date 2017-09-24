@@ -2,8 +2,8 @@ require 'open-uri'
 require 'nokogiri'
 
 module API
-  class Weblio
-    DICT_URI = 'http://www.weblio.jp/content'
+  class Kotobank
+    DICT_URI = 'http://kotobank.jp/word'
 
     class << self
       def fetch_dom(query)
@@ -22,14 +22,16 @@ module API
         yomi = nil
         body = nil
 
-        self.fetch_dom(query).xpath('//div[@class="kiji"]').tap do |bodies|
-          breay if bodies.size < 1
+        self.fetch_dom(query).xpath('//div[@class="ex cf"]').tap do |bodies|
+          break if bodies.size < 1
           body = bodies.first
 
+          match = body.css('h3').first.text.match(/(.+?)【(.+?)】/)
+          break if match.nil?
+
           kaki = query
-          yomi = body.css('b').first
-          yomi = yomi.text.gsub(/\s/, '') if yomi
-          body = body.text
+          yomi = match[1]
+          body = body.css('section').text
         end
 
         [kaki, yomi, body]
