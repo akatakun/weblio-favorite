@@ -21,13 +21,12 @@ when 0
     end
   end while args['loop']
 else
-  kaki, yomi, body = API::Weblio.search(ARGV[0])
-  dictionary = Dictionary.find_or_initialize_by(
-    kaki: kaki,
-  )
-  dictionary.yomi = yomi || kaki
-  dictionary.body = body
+  dict = Dictionary.search(ARGV[0])
+  if dict.nil?
+    print "検索結果が見つかりませんでした\n"
+    exit
+  end
 
-  dictionary.display()
+  dict.display()
 end
 

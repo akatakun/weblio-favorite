@@ -1,5 +1,6 @@
 require './lib/api/kotobank'
 require './lib/api/weblio'
+require 'pry'
 
 class Dictionary < ActiveRecord::Base
   class << self
@@ -18,6 +19,7 @@ class Dictionary < ActiveRecord::Base
         obj.body = body
         return obj
       end
+      nil
     end
   end
 
