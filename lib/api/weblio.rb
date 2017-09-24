@@ -3,7 +3,7 @@ require 'nokogiri'
 
 module API
   class Weblio
-    DICT_URI = 'http://www.weblio.jp/content/'
+    DICT_URI = 'http://www.weblio.jp/content'
 
     class << self
       def fetch_dom(query)
@@ -33,6 +33,8 @@ module API
         end
 
         [kaki, yomi, body]
+      rescue OpenURI::HTTPError
+        nil
       end
     end
   end

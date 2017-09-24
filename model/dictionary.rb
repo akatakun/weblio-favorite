@@ -1,18 +1,23 @@
+require './lib/api/kotobank'
 require './lib/api/weblio'
 
 class Dictionary < ActiveRecord::Base
   class << self
     def search(word)
-      kaki, yomi, body = API::Weblio.search(word)
-      return if kaki.nil? || kaki == ''
-      return if body !~ /\A\R*(.+?)\R*\Z/m
+      [API::Kotobank.search(word), API::Weblio.search(word)].each do |kaki, yomi, body|
+        next if kaki.nil? || kaki == ''
 
-      obj = find_or_initialize_by(
-        kaki: kaki,
-      )
-      obj.yomi = yomi
-      obj.body = body
-      obj
+        body !~ /\A\R*(.+?)\R*\Z/m
+        next if $1.nil?
+        body = $1.strip
+
+        obj = find_or_initialize_by(
+          kaki: kaki,
+        )
+        obj.yomi = yomi
+        obj.body = body
+        return obj
+      end
     end
   end
 
