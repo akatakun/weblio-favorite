@@ -23,7 +23,7 @@ module API
         body = nil
 
         self.fetch_dom(query).xpath('//div[@class="kiji"]').tap do |bodies|
-          breay if bodies.size < 1
+          break if bodies.size < 1
           body = bodies.first
 
           kaki = query
