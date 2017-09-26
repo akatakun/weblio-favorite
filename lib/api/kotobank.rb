@@ -17,14 +17,14 @@ module API
         Nokogiri::HTML.parse(html, nil, charset)
       end
 
-      def search(query)
+      def search(query, index = 0)
         kaki = nil
         yomi = nil
         body = nil
 
         self.fetch_dom(query).xpath('//div[@class="ex cf"]').tap do |bodies|
           break if bodies.size < 1
-          body = bodies.first
+          body = bodies[index]
 
           match = body.css('h3').first.text.match(/(.+?)【(.+?)】/)
           break if match.nil?

@@ -4,8 +4,8 @@ require 'pry'
 
 class Dictionary < ActiveRecord::Base
   class << self
-    def search(word)
-      [API::Kotobank.search(word), API::Weblio.search(word)].each do |kaki, yomi, body|
+    def search(word, index = 0)
+      [API::Kotobank.search(word, index), API::Weblio.search(word)].each do |kaki, yomi, body|
         next if kaki.nil? || kaki == ''
 
         body !~ /\A\R*(.+?)\R*\Z/m
