@@ -4,7 +4,7 @@ require 'pry'
 
 class Dictionary < ActiveRecord::Base
   class << self
-    def search(word, index = 0)
+    def search(word, index = nil)
       [API::Kotobank.search(word, index), API::Weblio.search(word)].each do |kaki, yomi, body|
         next if kaki.nil? || kaki == ''
 

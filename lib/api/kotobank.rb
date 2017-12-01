@@ -17,21 +17,25 @@ module API
         Nokogiri::HTML.parse(html, nil, charset)
       end
 
-      def search(query, index = 0)
+      def search(query, index = nil)
         kaki = nil
         yomi = nil
         body = nil
 
         self.fetch_dom(query).xpath('//div[@class="ex cf"]').tap do |bodies|
           break if bodies.size < 1
-          body = bodies[index]
+          indexes = index ? (index..index) : (0..4)
+          indexes.each do |index|
+            body = bodies[index]
 
-          match = body.css('h3').first.text.match(/(.+?)【(.+?)】/)
-          break if match.nil?
+            match = body.css('h3').first.text.match(/(.+?)【(.+?)】/)
+            next if match.nil?
 
-          kaki = query
-          yomi = match[1]
-          body = body.css('section').text
+            kaki = query
+            yomi = match[1]
+            body = body.css('section').text
+            break
+          end
         end
 
         [kaki, yomi, body]

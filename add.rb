@@ -2,7 +2,7 @@ require './initializer/active_record'
 
 raise 'String for search as argument is required' if ARGV.size < 1
 
-dict = Dictionary.search(ARGV[0], ARGV[1].to_i)
+dict = Dictionary.search(ARGV[0], ARGV[1] ? ARGV[1].to_i : nil)
 
 if dict.nil?
   print "検索結果が見つかりませんでした\n"
