@@ -1,7 +1,7 @@
 function webget() {
   prev_dir=`pwd`
   cd ~/development/ruby/weblio-favorite/
-  bundle exec ruby get.rb $1 $2 --slim 2> /dev/null
+  bundle exec ruby get.rb $1 $2 2> /dev/null
   cd $prev_dir
 }
 
