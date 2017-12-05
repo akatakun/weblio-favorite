@@ -27,6 +27,7 @@ module API
           indexes = index ? (index..index) : (0..4)
           indexes.each do |index|
             body = bodies[index]
+            next if body.nil?
 
             match = body.css('h3').first.text.match(/(.+?)【(.+?)】/)
             next if match.nil?
