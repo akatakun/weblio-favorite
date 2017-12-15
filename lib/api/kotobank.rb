@@ -37,6 +37,19 @@ module API
             body = body.css('section').text
             break
           end
+
+          indexes.each do |index|
+            body = bodies[index]
+            next if body.nil?
+
+            match = body.css('h3').first.text.match(/(.+?)/)
+            next if match.nil?
+
+            kaki = query
+            yomi = query
+            body = body.css('section').text
+            break
+          end if kaki.nil?
         end
 
         [kaki, yomi, body]
