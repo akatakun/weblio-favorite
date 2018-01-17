@@ -21,7 +21,7 @@ when 0
     end
   end while args['loop']
 else
-  dict = Dictionary.search(ARGV[0], ARGV[1] ? ARGV[1].to_i : nil)
+  dict = Dictionary.where(kaki: ARGV[0]).first || Dictionary.search(ARGV[0], ARGV[1] ? ARGV[1].to_i : nil)
   if dict.nil?
     print "検索結果が見つかりませんでした\n"
     exit
