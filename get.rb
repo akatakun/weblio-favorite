@@ -27,6 +27,9 @@ else
     exit
   end
 
+  if !dict.new_record?
+    puts '########### found record in database ###########'
+  end
   dict.display()
 end
 
