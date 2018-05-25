@@ -30,6 +30,16 @@ else
   if !dict.new_record?
     puts '########### found record in database ###########'
   end
+
   dict.display()
+
+  if dict.new_record?
+    print "Do you add a new record? [y/n]:"
+    case $stdin.gets.chomp
+    when /^[yY]/
+      dict.save
+      puts 'it is saved!'
+    end
+  end
 end
 
