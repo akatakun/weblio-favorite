@@ -1,6 +1,5 @@
 require './lib/api/kotobank'
 require './lib/api/weblio'
-require 'pry'
 
 class Dictionary < ActiveRecord::Base
   class << self
