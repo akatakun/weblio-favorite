@@ -9,7 +9,7 @@ module API
       def fetch_dom(query)
         charset = nil
 
-        html = open("#{DICT_URI}/#{URI.encode(query)}") do |f|
+        html = open("#{DICT_URI}/#{URI.encode(query)}", ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE) do |f|
           charset = f.charset
           f.read
         end
