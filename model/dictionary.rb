@@ -2,6 +2,8 @@ require './lib/api/kotobank'
 require './lib/api/weblio'
 
 class Dictionary < ActiveRecord::Base
+  belongs_to :category
+
   class << self
     def search(word, index = nil)
       [API::Kotobank.search(word, index), API::Weblio.search(word)].each do |kaki, yomi, body|
@@ -25,11 +27,11 @@ class Dictionary < ActiveRecord::Base
   def display(option = {})
     case
     when option['slim']
-      puts "#{self.kaki}(#{self.yomi})\n#{self.body[0..99]}"
+      puts "#{!self.category.nil? ? "[#{self.category.name}]" : ""}#{self.kaki}(#{self.yomi})\n#{self.body[0..99]}"
     when option['head']
-      puts "#{self.kaki}(#{self.yomi})"
+      puts "#{!self.category.nil? ? "[#{self.category.name}]" : ""}#{self.kaki}(#{self.yomi})"
     else
-      puts "#{self.kaki}(#{self.yomi})\n#{self.body}"
+      puts "#{!self.category.nil? ? "[#{self.category.name}]" : ""}#{self.kaki}(#{self.yomi})\n#{self.body}"
     end
   end
 end
