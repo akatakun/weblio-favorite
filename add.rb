@@ -24,6 +24,11 @@ if dict.yomi.nil? || dict.yomi == ''
   print "\n"
 end
 
-dict.save
+if !dict.new_record?
+  print "## found record in database ##\n"
+  dict.update(count: dict.count + 1)
+end
 
 dict.display
+
+dict.save

@@ -27,11 +27,11 @@ class Dictionary < ActiveRecord::Base
   def display(option = {})
     case
     when option['slim']
-      puts "#{!self.category.nil? ? "[#{self.category.name}]" : ""}#{self.kaki}(#{self.yomi})\n#{self.body[0..99]}"
+      puts "[#{sprintf("%03d", self.count)}]#{self.kaki}(#{self.yomi})#{!self.category.nil? ? " ##{self.category.name}" : ""}\n#{self.body[0..99]}"
     when option['head']
-      puts "#{!self.category.nil? ? "[#{self.category.name}]" : ""}#{self.kaki}(#{self.yomi})"
+      puts "[#{sprintf("%03d", self.count)}]#{self.kaki}(#{self.yomi})#{!self.category.nil? ? " ##{self.category.name}" : ""}"
     else
-      puts "#{!self.category.nil? ? "[#{self.category.name}]" : ""}#{self.kaki}(#{self.yomi})\n#{self.body}"
+      puts "[#{sprintf("%03d", self.count)}]#{self.kaki}(#{self.yomi})#{!self.category.nil? ? " ##{self.category.name}" : ""}\n#{self.body}"
     end
   end
 end

@@ -28,7 +28,8 @@ else
   end
 
   if !dict.new_record?
-    puts '########### found record in database ###########'
+    print "## found record in database ##\n"
+    dict.update(count: dict.count + 1)
   end
 
   dict.display()
