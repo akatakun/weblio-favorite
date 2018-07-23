@@ -3,7 +3,7 @@ require './lib/api/weblio'
 
 require 'optparse'
 
-args = ARGV.getopts('n:', 'slim', 'head', 'loop', 'latest')
+args = ARGV.getopts('n:', 'slim', 'head', 'loop', 'latest', 'weight')
 
 LATEST_OFFSET_NUMBER = 25
 
@@ -12,10 +12,13 @@ when 0
   begin
     sleep 1 if args['loop']
     limit = args['n'] || 1
-    if args['latest']
-      Dictionary.offset(Dictionary.count - LATEST_OFFSET_NUMBER + rand(LATEST_OFFSET_NUMBER)).limit(limit)
+    case
+    when args['latest']
+      Dictionary.pick_latest_randomly(LATEST_OFFSET_NUMBER).limit(limit)
+    when args['weight']
+      Dictionary.pick_randomly_with_count_as_weight.limit(limit)
     else
-      Dictionary.offset(rand(Dictionary.count)).limit(limit)
+      Dictionary.pick_randomly.limit(limit)
     end.each do |dictionary|
       dictionary.display(args)
     end

@@ -5,6 +5,37 @@ class Dictionary < ActiveRecord::Base
   belongs_to :category
 
   class << self
+    def pick_latest_randomly(latest_offset_number)
+      offset(count - latest_offset_number + rand(latest_offset_number))
+    end
+
+    def pick_randomly_with_count_as_weight
+      total_weight = 0
+      group(:count).count.each do |weight, count|
+        total_weight += (2 ** weight) * count
+      end
+
+      rnd = rand(total_weight)
+
+      pick_w = 0
+      pick_c = 0
+      group(:count).count.each do |weight, count|
+        w = (2 ** weight) * count
+        if rnd < w
+          pick_w = weight
+          pick_c = count
+          break
+        end
+        rnd -= w
+      end
+
+      where(count: pick_w).offset(rand(pick_c))
+    end
+
+    def pick_randomly
+      offset(rand(count))
+    end
+
     def search(word, index = nil)
       [API::Kotobank.search(word, index), API::Weblio.search(word)].each do |kaki, yomi, body|
         next if kaki.nil? || kaki == ''
