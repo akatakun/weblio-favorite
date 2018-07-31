@@ -8,3 +8,5 @@ ActiveRecord::Base.establish_connection(
 
 require './model/dictionary'
 require './model/category'
+require './model/dictionary_tag'
+require './model/tag'

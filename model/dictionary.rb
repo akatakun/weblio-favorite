@@ -3,6 +3,8 @@ require './lib/api/weblio'
 
 class Dictionary < ActiveRecord::Base
   belongs_to :category
+  has_many :tags, through: :dictionary_tags
+  has_many :dictionary_tags
 
   class << self
     def pick_latest_randomly(latest_offset_number)
@@ -58,11 +60,11 @@ class Dictionary < ActiveRecord::Base
   def display(option = {})
     case
     when option['slim']
-      puts "[#{sprintf("%03d", self.count)}]#{self.kaki}(#{self.yomi})#{!self.category.nil? ? " ##{self.category.name}" : ""}\n#{self.body[0..99]}"
+      puts "[#{sprintf("%03d", self.count)}]#{self.kaki}(#{self.yomi})#{!self.category.nil? ? " @#{self.category.name}" : ""}#{!self.tags.size.zero? ? " #{self.tags.map{|t| "##{t.name}"}.join(" ")}" : ""}\n#{self.body[0..99]}"
     when option['head']
-      puts "[#{sprintf("%03d", self.count)}]#{self.kaki}(#{self.yomi})#{!self.category.nil? ? " ##{self.category.name}" : ""}"
+      puts "[#{sprintf("%03d", self.count)}]#{self.kaki}(#{self.yomi})#{!self.category.nil? ? " @#{self.category.name}" : ""}#{!self.tags.size.zero? ? " #{self.tags.map{|t| "##{t.name}"}.join(" ")}" : ""}"
     else
-      puts "[#{sprintf("%03d", self.count)}]#{self.kaki}(#{self.yomi})#{!self.category.nil? ? " ##{self.category.name}" : ""}\n#{self.body}"
+      puts "[#{sprintf("%03d", self.count)}]#{self.kaki}(#{self.yomi})#{!self.category.nil? ? " @#{self.category.name}" : ""}#{!self.tags.size.zero? ? " #{self.tags.map{|t| "##{t.name}"}.join(" ")}" : ""}\n#{self.body}"
     end
   end
 end
