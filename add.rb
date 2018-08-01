@@ -45,7 +45,7 @@ end
 
 dict.category_id = category.id if category
 tags.each do |tag|
-  dict.dictionary_tags.find_or_create_by(
+  dict.dictionary_tags.find_or_initialize_by(
     tag_id: tag.id,
   )
 end
