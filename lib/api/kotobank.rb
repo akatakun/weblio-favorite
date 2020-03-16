@@ -29,7 +29,7 @@ module API
             body = bodies[index]
             next if body.nil?
 
-            match = body.css('h3').first.text.match(/(.+?)【(.+?)】/)
+            match = nil # body.css('h3').first.text.match(/(.+?)【(.+?)】/)
             next if match.nil?
 
             kaki = query
@@ -42,7 +42,7 @@ module API
             body = bodies[index]
             next if body.nil?
 
-            match = body.css('h3').first.text.match(/(.+?)/)
+            match = nil # body.css('h3').first.text.match(/(.+?)/)
             next if match.nil?
 
             kaki = query

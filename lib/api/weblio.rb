@@ -1,5 +1,6 @@
 require 'open-uri'
 require 'nokogiri'
+require 'pry'
 
 module API
   class Weblio
