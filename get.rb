@@ -3,7 +3,7 @@ require './lib/api/weblio'
 
 require 'optparse'
 
-args = ARGV.getopts('n:', 'slim', 'head', 'loop', 'latest', 'weight')
+args = ARGV.getopts('n:', 'c:', 't:', 'slim', 'head', 'loop', 'latest', 'weight')
 
 LATEST_OFFSET_NUMBER = 25
 
