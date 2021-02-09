@@ -3,8 +3,8 @@ require './lib/api/weblio'
 
 class Dictionary < ActiveRecord::Base
   belongs_to :category
-  has_many :tags, through: :dictionary_tags
   has_many :dictionary_tags
+  has_many :tags, through: :dictionary_tags
 
   class << self
     def pick_latest_randomly(latest_offset_number)

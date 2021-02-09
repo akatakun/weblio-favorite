@@ -5,6 +5,7 @@ source "https://rubygems.org"
 
 gem "pry"
 
+gem 'net-ftp'
 gem "activerecord"
 gem "sqlite3"
 gem "nokogiri"
